@@ -54,6 +54,17 @@ class SynthApp(tk.Tk):
         # Create a button to play the note progression
         self.play_button = tk.Button(self, text="Play", command=self.play_progression)
         self.play_button.place(x=210, y=200)
+        
+         # FM Synthesis Parameters
+        self.fm_mod_freq = tk.DoubleVar(value=220)  # Default modulator frequency
+        self.fm_mod_index = tk.DoubleVar(value=1)   # Default modulation index
+
+        # FM Controls
+        fm_mod_freq_slider = tk.Scale(self, from_=0, to=1000, resolution=1, orient='horizontal', variable=self.fm_mod_freq, label="FM Modulator Frequency")
+        fm_mod_freq_slider.place(x=250, y=200)
+
+        fm_mod_index_slider = tk.Scale(self, from_=0, to=10, resolution=0.1, orient='horizontal', variable=self.fm_mod_index, label="FM Modulation Index")
+        fm_mod_index_slider.place(x=375, y=200)
 
 
     def create_piano_keys(self):
@@ -116,7 +127,10 @@ class SynthApp(tk.Tk):
     # Inside the SynthApp class in projectGui.py
 
     def play_sound(self, freq):
-        waveform_type = self.effect_var.get()
+       # waveform_type = self.effect_var.get()
+        waveform_type = 'fm'  # For now, using FM for all sounds; adjust as needed
+        fm_params = (self.fm_mod_freq.get(), self.fm_mod_index.get())
+        waveform = generate_waveform(freq, waveform_type, fm_params=fm_params)
         adsr_params = (
             self.adsr_values['attack'].get(),
             self.adsr_values['decay'].get(),

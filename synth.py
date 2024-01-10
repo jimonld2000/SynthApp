@@ -35,7 +35,7 @@ def load_piano_samples(sample_directory):
         return None
 
 # Generate waveforms
-def generate_waveform(freq, waveform_type='sine', duration=DURATION, adsr_params=None, delay_params=None, piano_samples=None):
+def generate_waveform(freq, waveform_type='sine', duration=DURATION, adsr_params=None, delay_params=None, piano_samples=None, fm_params=None):
      # Initialize waveform to None or some default value
     logging.debug(f"Generating waveform: freq={freq}, type={waveform_type}")
     # Initialize waveform to sine by default
@@ -77,7 +77,13 @@ def generate_waveform(freq, waveform_type='sine', duration=DURATION, adsr_params
             else:
                 waveform = waveform[:int(SAMPLE_RATE * duration)]
         else:
-            raise ValueError(f"No trumpet sample for frequency {freq}")        
+            raise ValueError(f"No trumpet sample for frequency {freq}")
+    elif waveform_type == 'fm':
+        carrier_freq = freq
+        modulator_freq, modulation_index = fm_params  # FM parameters
+        t = np.linspace(0, duration, int(SAMPLE_RATE * duration), endpoint=False)
+        modulator = np.sin(2 * np.pi * modulator_freq * t)
+        waveform = np.sin(2 * np.pi * carrier_freq * t + modulation_index * modulator)            
     else:
         t = np.linspace(0, duration, int(SAMPLE_RATE * duration), endpoint=False)
         if waveform_type == 'sine':
