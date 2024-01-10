@@ -5,8 +5,8 @@ Semester project for ASRSV
 The project simulates a virtual synth app, with a keyboard of a single octave.
 
 ## Features
-- playing notes both by clicking ob keys and pressing buttonf from KB
-- adding ASDR effects to the sound
-- write note sequences to be played after
+- playing notes both by clicking on keys and pressing buttons from KB
+- adding ASDR effects to the sounds
+- write note sequences to be played by app
 - add delay and feedback effects for echo
 - choose different sounds and effects for the notes (sine, square, sine-square waveform generation, and different instrument samples)
