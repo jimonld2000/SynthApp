@@ -80,10 +80,12 @@ def generate_waveform(freq, waveform_type='sine', duration=DURATION, adsr_params
             raise ValueError(f"No trumpet sample for frequency {freq}")
     elif waveform_type == 'fm':
         carrier_freq = freq
-        modulator_freq, modulation_index = fm_params  # FM parameters
-        t = np.linspace(0, duration, int(SAMPLE_RATE * duration), endpoint=False)
-        modulator = np.sin(2 * np.pi * modulator_freq * t)
-        waveform = np.sin(2 * np.pi * carrier_freq * t + modulation_index * modulator)            
+        if waveform_type == 'fm':
+            if fm_params is None:
+                fm_params = (220, 1)  # Default values for FM modulation
+            modulator_freq, modulation_index = fm_params
+            modulator = np.sin(2 * np.pi * modulator_freq * t)
+            waveform = np.sin(2 * np.pi * freq * t + modulation_index * modulator)            
     else:
         t = np.linspace(0, duration, int(SAMPLE_RATE * duration), endpoint=False)
         if waveform_type == 'sine':

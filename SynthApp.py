@@ -60,11 +60,11 @@ class SynthApp(tk.Tk):
         self.fm_mod_index = tk.DoubleVar(value=1)   # Default modulation index
 
         # FM Controls
-        fm_mod_freq_slider = tk.Scale(self, from_=0, to=1000, resolution=1, orient='horizontal', variable=self.fm_mod_freq, label="FM Modulator Frequency")
-        fm_mod_freq_slider.place(x=250, y=200)
+        fm_mod_freq_slider = tk.Scale(self, from_=0, to=1000, resolution=1, orient='horizontal', variable=self.fm_mod_freq, label="FM Mod Freq")
+        fm_mod_freq_slider.place(x=475, y=180)
 
-        fm_mod_index_slider = tk.Scale(self, from_=0, to=10, resolution=0.1, orient='horizontal', variable=self.fm_mod_index, label="FM Modulation Index")
-        fm_mod_index_slider.place(x=375, y=200)
+        fm_mod_index_slider = tk.Scale(self, from_=0, to=10, resolution=0.1, orient='horizontal', variable=self.fm_mod_index, label="FM Mod Ind")
+        fm_mod_index_slider.place(x=580, y=180)
 
 
     def create_piano_keys(self):
@@ -99,7 +99,7 @@ class SynthApp(tk.Tk):
         self.effect_var = tk.StringVar(value="sine")
         effects_frame = tk.Frame(self)
         effects_frame.place(x=0, y=180)  # Position the effects below the keys
-        effects = ["sine", "square", "sine-square", "flute", "piano", "trumpet"]  # Add more as needed
+        effects = ["sine", "square", "sine-square", "flute", "piano", "trumpet", "fm"]  # Add more as needed
         for effect in effects:
             rb = tk.Radiobutton(effects_frame, text=effect, variable=self.effect_var, value=effect)
             rb.pack(side=tk.LEFT)
@@ -128,9 +128,7 @@ class SynthApp(tk.Tk):
 
     def play_sound(self, freq):
        # waveform_type = self.effect_var.get()
-        waveform_type = 'fm'  # For now, using FM for all sounds; adjust as needed
-        fm_params = (self.fm_mod_freq.get(), self.fm_mod_index.get())
-        waveform = generate_waveform(freq, waveform_type, fm_params=fm_params)
+        waveform_type =  self.effect_var.get()  
         adsr_params = (
             self.adsr_values['attack'].get(),
             self.adsr_values['decay'].get(),
@@ -150,7 +148,10 @@ class SynthApp(tk.Tk):
         elif waveform_type == 'flute':
             waveform = generate_waveform(freq, waveform_type, piano_samples=load_piano_samples('samples\\flute'))
         elif waveform_type == 'trumpet':
-            waveform = generate_waveform(freq, waveform_type, piano_samples=load_piano_samples('samples\\trumpet'))                     
+            waveform = generate_waveform(freq, waveform_type, piano_samples=load_piano_samples('samples\\trumpet')) 
+        elif waveform_type == 'fm':
+            fm_params = (self.fm_mod_freq.get(), self.fm_mod_index.get())
+            waveform = generate_waveform(freq, waveform_type, duration=DURATION, adsr_params=adsr_params, fm_params=fm_params)                        
         else:
             waveform = generate_waveform(freq, waveform_type, duration=DURATION,
                                         adsr_params=adsr_params, delay_params=delay_params)
