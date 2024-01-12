@@ -21,7 +21,7 @@ NOTE_FREQUENCIES = {
 logging.basicConfig(level=logging.DEBUG)
 
 # Function to load piano samples
-def load_piano_samples(sample_directory):
+def load_instrument_samples(sample_directory):
     try:
         samples = {}
         for note, freq in NOTE_FREQUENCIES.items():

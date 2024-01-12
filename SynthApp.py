@@ -3,7 +3,7 @@ import tkinter as tk
 import tkinter.messagebox
 import threading
 import time
-from synth import pre_generate_waveforms, play_waveform, generate_waveform, load_piano_samples, DURATION, NOTE_FREQUENCIES
+from synth import pre_generate_waveforms, play_waveform, generate_waveform, load_instrument_samples, DURATION, NOTE_FREQUENCIES
 
 # GUI Application
 
@@ -144,11 +144,11 @@ class SynthApp(tk.Tk):
 
           # Handle piano samples separately
         if waveform_type == 'piano':
-            waveform = generate_waveform(freq, waveform_type, piano_samples=load_piano_samples('samples\\piano'))
+            waveform = generate_waveform(freq, waveform_type, piano_samples=load_instrument_samples('samples\\piano'))
         elif waveform_type == 'flute':
-            waveform = generate_waveform(freq, waveform_type, piano_samples=load_piano_samples('samples\\flute'))
+            waveform = generate_waveform(freq, waveform_type, piano_samples=load_instrument_samples('samples\\flute'))
         elif waveform_type == 'trumpet':
-            waveform = generate_waveform(freq, waveform_type, piano_samples=load_piano_samples('samples\\trumpet')) 
+            waveform = generate_waveform(freq, waveform_type, piano_samples=load_instrument_samples('samples\\trumpet')) 
         elif waveform_type == 'fm':
             fm_params = (self.fm_mod_freq.get(), self.fm_mod_index.get())
             waveform = generate_waveform(freq, waveform_type, duration=DURATION, adsr_params=adsr_params, fm_params=fm_params)                        
