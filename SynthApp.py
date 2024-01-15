@@ -26,7 +26,6 @@ class SynthApp(tk.Tk):
         self.geometry('1000x300')  # Adjust the size as needed
 
         # Pre-generate waveforms for each note and waveform type
-        # Note: 'piano' waveform is handled separately with samples
         self.waveforms = {waveform: pre_generate_waveforms(NOTE_FREQUENCIES.values(), waveform) 
                           for waveform in ["sine", "sine-square", "square"]}
 
@@ -36,7 +35,6 @@ class SynthApp(tk.Tk):
         # Create sound effects options
         self.create_sound_effects()
 
-        
         # Create a text entry for the note progression with a default message
         self.note_entry = tk.Entry(self)
         self.note_entry.insert(0, 'Insert notes to play progression')
