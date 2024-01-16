@@ -23,7 +23,7 @@ class SynthApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("SynthSim")
-        self.geometry('1000x300')  # Adjust the size as needed
+        self.geometry('1000x300')
 
         # Pre-generate waveforms for each note and waveform type
         self.waveforms = {waveform: pre_generate_waveforms(NOTE_FREQUENCIES.values(), waveform) 
@@ -170,8 +170,7 @@ class SynthApp(tk.Tk):
     def stop_input(self, event):
         # Unbind the key press events when the entry loses focus
         self.note_entry.unbind("<KeyPress>")
-
-                     
+          
     def play_progression(self):
         # Get the note progression from the entry
         progression = self.note_entry.get().split()
